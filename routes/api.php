@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 
+// header('Access-Control-Allow-Origin:  *');
+// header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+// header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //master data surat
 
 Route::apiResource('/surat-masuk','masterdatasurat\suratmasuk\SuratmasukController');
+// Route::get('/suratmasuk-updateandroid/{id}','masterdatasurat\suratmasuk\SuratmasukController@updateandroid')->name('sm.updateandroid');
+
 Route::apiResource('/surat-keluar','masterdatasurat\suratkeluar\SuratkeluarController');
 
 Route::apiResource('/disposisi-api','API\DisposisiController');

@@ -117,6 +117,40 @@ class SuratmasukController extends Controller
         }
     }
 
+    public function updateandroid(Request $request, $id)
+    {
+        return $id;
+        $check = SuratMasuk::where('id_surat_masuk',$id)->first();
+        if($check->status !== 0) {
+            return response()->json(["status" => "error", "message" => "dalam status pengajuan, aksi tidak di izinkan"]);
+        } else {
+            $date = $request->tgl_surat;
+            $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
+            $date2 = $request->tgl_diterima;
+            $fixed2 = date('Y-m-d', strtotime(substr($date2,0,10)));
+
+            $requestData = $request->all();
+            if($date) {
+                $requestData['tgl_surat'] = $fixed;
+            }
+            if($date2) {
+                $requestData['tgl_diterima'] = $fixed2;
+            }
+            
+            try {
+                $data = SuratMasuk::findOrFail($id);
+                $data->update($requestData);
+
+                return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);
+
+            } catch (\Exception $e){
+
+                return response()->json(["status" => "error", "message" => $e->getMessage()]);
+            }
+            //
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
