@@ -88,7 +88,7 @@ class SuratmasukController extends Controller
 
         $check = SuratMasuk::where('id_surat_masuk',$id)->first();
         if($check->status !== 0) {
-            return response()->json(["status" => "error", "message" => "dalam status pengajuan, aksi tidak di izinkan"]);
+            return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
         } else {
             $date = $request->tgl_surat;
             $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
@@ -122,7 +122,7 @@ class SuratmasukController extends Controller
         return $id;
         $check = SuratMasuk::where('id_surat_masuk',$id)->first();
         if($check->status !== 0) {
-            return response()->json(["status" => "error", "message" => "dalam status pengajuan, aksi tidak di izinkan"]);
+            return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
         } else {
             $date = $request->tgl_surat;
             $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
@@ -162,7 +162,7 @@ class SuratmasukController extends Controller
         try {
             $check = SuratMasuk::where('id_surat_masuk',$id)->first();
             if($check->status !== 0) {
-                return response()->json(["status" => "error", "message" => "dalam status pengajuan, aksi tidak di izinkan"]);
+                return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
             } else {
                 $data = SuratMasuk::where('id_surat_masuk',$id)->delete();
 

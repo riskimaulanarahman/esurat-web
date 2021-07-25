@@ -84,7 +84,7 @@ class SuratkeluarController extends Controller
     {
         $check = SuratKeluar::where('id_surat_keluar',$id)->first();
         if($check->status !== 0) {
-            return response()->json(["status" => "error", "message" => "dalam status pengajuan, aksi tidak di izinkan"]);
+            return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
         } else {
             $date = $request->tanggal_surat;
             $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
@@ -116,7 +116,7 @@ class SuratkeluarController extends Controller
         try {
             $check = SuratKeluar::where('id_surat_keluar',$id)->first();
             if($check->status !== 0) {
-                return response()->json(["status" => "error", "message" => "dalam status pengajuan, aksi tidak di izinkan"]);
+                return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
             } else {
                 $data = SuratKeluar::where('id_surat_keluar',$id)->delete();
 

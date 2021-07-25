@@ -15,7 +15,7 @@
 			<span class="icon-bar"></span>
 		</button>
 		@endif
-		<a href="/" class="navbar-brand"><span class=""><img style="max-width:50px;" src="https://pmb.universitasmulia.ac.id/wp-content/uploads/2020/05/logo_stikom-1.png" alt=""></span> <b>Universitas Mulia Balikpapan</b></a>
+		<a href="/" class="navbar-brand"><span class=""><img style="max-width:50px;" src="https://pmb.universitasmulia.ac.id/wp-content/uploads/2020/05/logo_stikom-1.png" alt=""></span> <b>UM</b></a>
 		{{-- <a href="/" class="navbar-brand"><span class="navbar-logo"></span> <b>Absensi</b></a> --}}
 		@if ($headerMegaMenu)
 			<button type="button" class="navbar-toggle pt-0 pb-0 mr-0" data-toggle="collapse" data-target="#top-navbar">

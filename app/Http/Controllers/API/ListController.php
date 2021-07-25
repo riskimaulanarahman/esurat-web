@@ -16,19 +16,23 @@ class ListController extends Controller
 
     public function getlogin(Request $req)
     {   
-        $check = DB::table('users')->select('username','email','password')
+
+        $check = DB::table('users')->select('username','email','password','role')
         ->where('email',$req->email)
         ->first();
 
         if($check) { 
             if (Hash::check($req->password, $check->password))
             {
-                $data = 200;
+                $data = [
+                    "status" => 200,
+                    "data" => $check
+                ];
             } else {
-                $data = 404;
+                $data = ["status" => 404];
             }
         } else {
-            $data = 0;
+            $data = ["status" => 0];
         }
 
         return response()->json($data);
