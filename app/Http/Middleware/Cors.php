@@ -21,11 +21,11 @@ class Cors
             $data = [
                 "email" => $request->email,
             ];
-            Storage::disk('public')->put('email.json', json_encode($data));
+            Storage::disk('local')->put('email.json', json_encode($data));
         }
 
 
-        $path = storage_path() . "/app/public/email.json";
+        $path = storage_path() . "/app/email.json";
 
         $json = json_decode(file_get_contents($path), true); 
 
