@@ -28,6 +28,7 @@ Route::apiResource('/surat-masuk','masterdatasurat\suratmasuk\SuratmasukControll
 Route::apiResource('/surat-keluar','masterdatasurat\suratkeluar\SuratkeluarController');
 
 Route::apiResource('/disposisi-api','API\DisposisiController');
+Route::apiResource('/disposisi-ionic','API\DisposisiIonicController');
 
 // Route::apiResource('/surat-pelayanan','masterdatasurat\suratpelayanan\SuratpelayananController');
 Route::post('/upload-berkas/{id}/{module}','BerkasController@update')->name('uploadberkas');
@@ -43,6 +44,7 @@ Route::apiResource('/master-jabatan','masteruser\JabatanController');
 
 //list
 Route::post('list-jabatan','API\ListController@listJabatan');
+Route::get('dashboard-count','API\ListController@dashboardadmin');
 
 //check
 Route::get('/status-suratmasuk/{id}','masterdatasurat\suratmasuk\SuratmasukController@checksuratmasuk')->name('status.suratmasuk');
@@ -50,5 +52,7 @@ Route::get('/status-suratkeluar/{id}','masterdatasurat\suratkeluar\SuratkeluarCo
 Route::get('/status-disposisi/{id}','API\DisposisiController@checkdisposisi')->name('status.disposisi');
 
 Route::post('getlogin','API\ListController@getlogin');
+Route::get('checknik/{nik}','API\ListController@checkusernik');
+Route::get('alluser','API\ListController@alluser');
 
 Route::get('/test-api','API\TestController@index');
