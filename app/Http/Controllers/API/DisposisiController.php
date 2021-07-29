@@ -66,6 +66,7 @@ class DisposisiController extends Controller
                     "nik" => $request->nik,
                     "no_agenda" => $request->no_agenda,
                     "status" => 1,
+                    "file_disposisi" => $request->file_disposisi,
                     "tgl_disposisi" => Carbon::today()->format('Y-m-d')
                 ]);
                 $getsm = SuratMasuk::where('id_surat_masuk',$request->getid)->first();
@@ -79,6 +80,7 @@ class DisposisiController extends Controller
                     "nik" => $request->nik,
                     "no_agenda" => $request->no_agenda,
                     "status" => 1,
+                    "file_disposisi" => $request->file_disposisi,
                     "tgl_disposisi" => Carbon::today()->format('Y-m-d')
                 ]);   
 

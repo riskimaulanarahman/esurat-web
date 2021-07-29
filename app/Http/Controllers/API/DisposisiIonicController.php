@@ -54,14 +54,100 @@ class DisposisiIonicController extends Controller
                 if($data->status !== 1) {
                     return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
                 } else {
-                    $data->update($request->data);
+                    if($request->data['aksi'] == 'approval') {
+                        // return 'approval';
+                        if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                            $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
+                            $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
+                        }
+                        $data->aksi =  $request->data['aksi'];
+                        $data->status = $request->data['approval'];
+                        $data->save();
+
+                        $suratmasuk = SuratMasuk::where('id_surat_masuk',$data->id_surat_masuk)->first();
+                        $suratmasuk->status = $request->data['approval'];
+                        $suratmasuk->save();
+
+                    } else if($request->data['aksi'] == 'teruskan') {
+                        // return 'teruskan';
+                        if($data->nik !== (int)$request->data['teruskan']) {
+                            if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                                $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
+                                $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
+                            }
+                            $data->aksi = $request->data['aksi'];
+                            $data->diteruskan_kepada = $request->data['teruskan'];
+                            $data->status = 4;
+                            $data->save();
+                            
+                            $newdisposisi = Disposisi::create([
+                                'id_surat_masuk' => $data->id_surat_masuk,
+                                'nik' => $request->data['teruskan'],
+                                'no_agenda' => $data->no_agenda,
+                                'tgl_disposisi' => $data->tgl_disposisi,
+                                // 'diteruskan_kepada' => $request->data['teruskan'],
+                                'dengan_hormat_harap' => $data->dengan_hormat_harap,
+                                'catatan_tindak_lanjut' => $data->catatan_tindak_lanjut,
+                                'status' => 1,
+                                'file_disposisi' => $data->file_disposisi,
+                            ]);
+                        } else {
+                            
+                            return response()->json(["status" => "error", "message" => 'Tidak Bisa Diteruskan dengan orang yang sama']);
+    
+                        }
+                    }
+                    // $data->update($request->data);
                     return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
                 }
             } else if($request->module == 'suratkeluar') {
                 if($data->status !== 1) {
                     return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
                 } else {
-                    $data->update($request->data);
+                    if($request->data['aksi'] == 'approval') {
+                        // return 'approval';
+                        if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                            $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
+                            $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
+                        }
+                        $data->aksi =  $request->data['aksi'];
+                        $data->status = $request->data['approval'];
+                        $data->save();
+
+                        $suratkeluar = SuratKeluar::where('id_surat_keluar',$data->id_surat_keluar)->first();
+                        $suratkeluar->status = $request->data['approval'];
+                        $suratkeluar->save();
+
+                    } else if($request->data['aksi'] == 'teruskan') {
+                        // return 'teruskan';
+                        if($data->nik !== (int)$request->data['teruskan']) {
+                            if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                                $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
+                                $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
+                            }
+                            $data->aksi = $request->data['aksi'];
+                            $data->diteruskan_kepada = $request->data['teruskan'];
+                            $data->status = 4;
+                            $data->save();
+                            
+                            $newdisposisi = Disposisi::create([
+                                'id_surat_keluar' => $data->id_surat_keluar,
+                                'nik' => $request->data['teruskan'],
+                                'no_agenda' => $data->no_agenda,
+                                'tgl_disposisi' => $data->tgl_disposisi,
+                                // 'diteruskan_kepada' => $request->data['teruskan'],
+                                'dengan_hormat_harap' => $data->dengan_hormat_harap,
+                                'catatan_tindak_lanjut' => $data->catatan_tindak_lanjut,
+                                'status' => 1,
+                                'file_disposisi' => $data->file_disposisi,
+                            ]);
+                        } else {
+                            
+                            return response()->json(["status" => "error", "message" => 'Tidak Bisa Diteruskan dengan orang yang sama']);
+    
+                        }
+                    }
+                    
                     return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
                 }
             }

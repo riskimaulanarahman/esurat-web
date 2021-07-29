@@ -44,6 +44,7 @@ Route::apiResource('/master-jabatan','masteruser\JabatanController');
 
 //list
 Route::post('list-jabatan','API\ListController@listJabatan');
+Route::post('list-karyawan','API\ListController@listKaryawan');
 Route::get('dashboard-count','API\ListController@dashboardadmin');
 
 //check

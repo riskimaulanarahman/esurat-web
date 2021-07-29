@@ -73,11 +73,12 @@ $(document).ready(function(){
         popup.show();
     };
 
-    var showDisposisi = function(data) 
+    var showDisposisi = function(data,file) 
     {
         $.get('api/status-suratmasuk/'+data,function(item){
             if(item == 0) {
                 $('#modal-disposisi').modal('show');
+                $('#file_disposisi').val(file);
             } else {
                 DevExpress.ui.notify("dalam status pengajuan, aksi tidak di izinkan", "error", 5000);
             }
@@ -240,7 +241,7 @@ $(document).ready(function(){
             
                     $('<button class="btn btn-info btn-xs">Disposisi</button>').addClass('dx-button').on('dxclick', function(evt) {
                         evt.stopPropagation();
-                            showDisposisi(options.data.id_surat_masuk);
+                            showDisposisi(options.data.id_surat_masuk,options.data.file_surat_masuk);
                     }).appendTo(container);
                     
                     }

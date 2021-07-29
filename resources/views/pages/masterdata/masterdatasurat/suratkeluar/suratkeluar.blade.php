@@ -34,7 +34,7 @@
 					<form method="POST" id="form-dism">
 					<div class="form-group row m-b-15">
 						<input type="hidden" name="module" id="module" value="suratkeluar">
-						<input type="text" name="getid" id="getid">
+						<input type="hidden" name="getid" id="getid">
 						<label class="col-md-3 col-form-label">Kepada :</label>
 						<div class="col-md-7">
 						  {{-- <input type="text" class="form-control" placeholder="" /> --}}
@@ -52,12 +52,12 @@
 						  <input type="text" name="no_agenda" id="no_agenda" class="form-control" placeholder="" />
 						</div>
 					  </div>
-					  {{-- <div class="form-group row m-b-15">
-						<label class="col-md-3 col-form-label">Isi Disposisi :</label>
+					  <div class="form-group row m-b-15">
+						<label class="col-md-3 col-form-label">File :</label>
 						<div class="col-md-7">
-						  <input type="text" class="form-control" placeholder="" />
+						  <input type="text" name="file_disposisi" id="file_disposisi" class="form-control" placeholder="" readonly/>
 						</div>
-					  </div> --}}
+					  </div>
 				</div>
 				<div class="modal-footer">
 					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>

@@ -10,6 +10,7 @@ use App\Jabatan;
 use App\SuratMasuk;
 use App\SuratKeluar;
 use App\Disposisi;
+use App\Karyawan;
 use Illuminate\Support\Carbon;
 
 
@@ -19,11 +20,16 @@ class ListController extends Controller
         return Jabatan::select('id_jabatan','nama_jabatan')->get();
     }
 
+    public function listKaryawan() {
+        return Karyawan::select('id_karyawan','nama_karyawan','nik')->get();
+    }
+
     public function getlogin(Request $req)
     {   
 
         $check = DB::table('users')->select('username','email','password','role','nik')
         ->where('email',$req->email)
+        ->where('role','!=','admin')
         ->first();
 
         if($check) { 

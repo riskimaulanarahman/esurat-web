@@ -61,7 +61,6 @@
                 <div id="divteruskan" class="form-group row m-b-15" hidden>
                     <label class="col-md-3 col-form-label">Kepada :</label>
                     <div class="col-md-7">
-                      {{-- <input type="text" class="form-control" placeholder="" /> --}}
                       <select class="form-control" name="teruskan" id="teruskan">
                           <option value="">- Pilih -</option>
                           @foreach($karyawan as $key => $val)
@@ -81,6 +80,8 @@
                       </select>
                     </div>
                   </div>
+                
+
                
             </div>
             <div class="modal-footer">

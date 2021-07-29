@@ -52,6 +52,12 @@
 						  <input type="text" name="no_agenda" id="no_agenda" class="form-control" placeholder="" />
 						</div>
 					  </div>
+					  <div class="form-group row m-b-15">
+						<label class="col-md-3 col-form-label">File :</label>
+						<div class="col-md-7">
+						  <input type="text" name="file_disposisi" id="file_disposisi" class="form-control" placeholder="" readonly/>
+						</div>
+					  </div>
 					  {{-- <div class="form-group row m-b-15">
 						<label class="col-md-3 col-form-label">Isi Disposisi :</label>
 						<div class="col-md-7">
