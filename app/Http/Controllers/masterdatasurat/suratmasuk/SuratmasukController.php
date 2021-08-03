@@ -5,10 +5,13 @@ namespace App\Http\Controllers\masterdatasurat\suratmasuk;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+ 
 
 use App\SuratMasuk;
 use App\Karyawan;
+use App\Disposisi;
 // use DateTime;
+use PDF;
 
 class SuratmasukController extends Controller
 {
@@ -181,7 +184,9 @@ class SuratmasukController extends Controller
             $data = SuratMasuk::where('id_surat_masuk',$id)->first();
             if($data->status !== 0) {
                 return 1;
-            } else {
+            }else if($data->file_surat_masuk == null){
+                return 2; 
+            }else {
                 return 0;
             }
 
@@ -189,5 +194,22 @@ class SuratmasukController extends Controller
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
         }
+    }
+
+    public function cetakpdfsm($id) {
+        $suratmasuk = SuratMasuk::where('id_surat_masuk',$id)->first();
+        $disposisi = Disposisi::select('disposisi.*','karyawan.nama_karyawan')
+        ->leftJoin('karyawan','disposisi.diteruskan_kepada','karyawan.nik')
+        ->where('disposisi.id_surat_masuk',$id)->orderBy('disposisi.created_at','desc')
+        ->first();
+
+        // return $disposisi;
+
+        // $pdf = PDF::loadview('pdfsuratmasuk');
+        $pdf = PDF::loadview('pdfsuratmasuk',[
+            'suratmasuk'=>$suratmasuk,
+            'disposisi'=>$disposisi,
+        ]);
+	    return $pdf->stream();
     }
 }

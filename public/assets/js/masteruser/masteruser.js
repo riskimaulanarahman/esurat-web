@@ -167,7 +167,24 @@
             if (e.dataField === "password" && e.parentType === "dataRow") {
                 e.editorOptions.value = "";
             }
+            if (e.dataField == "jabatan" || e.dataField == "nama_karyawan" || e.dataField == "alamat" || e.dataField == "no_hp") {
+                if(!e.row.isNewRow) {
+                    e.editorOptions.visible = false;
+                }
+                // console.log(e.row);
+                // return;
+            }
+            // console.log(e.row);
         },
+        onInitNewRow: function(e) {
+            console.log(e);
+        },
+        onEditingStart: function(e) {
+            console.log(e);
+            // if (e.dataField === "nama_karyawan" && e.parentType === "dataRow") {
+            //     e.editorOptions.visible = false;
+            // }
+        }, 
         onToolbarPreparing: function(e) {
             dataGrid = e.component;
     

@@ -76,8 +76,10 @@ $(document).ready(function(){
             if(item == 0) {
                 $('#modal-disposisi').modal('show');
                 $('#file_disposisi').val(file);
-            } else {
-                DevExpress.ui.notify("dalam status pengajuan, aksi tidak di izinkan", "error", 5000);
+            } else if(item == 1) {
+                DevExpress.ui.notify("aksi tidak di izinkan", "error", 5000);
+            } else if(item == 2) {
+                DevExpress.ui.notify("file tidak ditemukan", "error", 5000);
             }
         });
         $('#getid').val(data);
@@ -156,10 +158,10 @@ $(document).ready(function(){
                         $('<button class="btn btn-danger btn-xs">Upload</button>').addClass('dx-button').on('dxclick', function(evt) {
                             evt.stopPropagation();
                             $.get('api/status-suratkeluar/'+options.data.id_surat_keluar,function(item){
-                                if(item == 0) {
+                                if(item == 2 || item == 0) {
                                     showUpload(options.data.id_surat_keluar,options.data.file_surat_keluar);
-                                } else {
-                                    DevExpress.ui.notify("dalam status pengajuan, aksi tidak di izinkan", "error", 5000);
+                                } else if(item == 1) {
+                                    DevExpress.ui.notify("aksi tidak di izinkan", "error", 5000);
                                 }
                             })
     
@@ -242,6 +244,23 @@ $(document).ready(function(){
                         $('<a href="/upload/'+options.data.file_surat_keluar+'" target="_blank">'+options.data.file_surat_keluar+'</a>').addClass('dx-link').appendTo(container);
                         
                     }
+                },
+                {
+                    caption: "aksi",
+                    type: "buttons",
+                    width: 110,
+                    buttons: ["edit",{
+                        hint: "generate",
+                        icon: "repeat",
+                        onClick: function(e) {
+                            alert(e.row.data.id_surat_keluar);
+                            // var clonedItem = $.extend({}, e.row.data, { ID: ++maxID });
+    
+                            // employees.splice(e.row.rowIndex, 0, clonedItem);
+                            // e.component.refresh(true);
+                            // e.event.preventDefault();
+                        }
+                    }]
                 },
                 
             ],

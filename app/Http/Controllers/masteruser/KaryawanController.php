@@ -59,7 +59,16 @@ class KaryawanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $karyawan = karyawan::find($id);
+            $karyawan->update($request->all());
+
+            return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);
+
+        } catch (\Exception $e){
+
+            return response()->json(["status" => "error", "message" => $e->getMessage()]);
+        }
     }
 
     /**

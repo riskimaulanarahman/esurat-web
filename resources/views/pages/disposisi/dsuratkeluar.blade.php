@@ -48,6 +48,7 @@
                 <div class="form-group row m-b-15">
                     <input type="hidden" name="module" id="module" value="suratkeluar">
                     <input type="hidden" name="getid" id="getid">
+					<input type="hidden" name="idusers" id="idusers" value="{{Auth::user()->id}}">
                     <div class="col-md-7">
                         {{-- <input type="text" class="form-control" placeholder="" /> --}}
                         <select class="form-control" name="aksi" id="aksi">

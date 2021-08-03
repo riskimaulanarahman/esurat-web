@@ -23,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //master data surat
 
 Route::apiResource('/surat-masuk','masterdatasurat\suratmasuk\SuratmasukController');
+Route::get('/cetakpdfsm/{id}','masterdatasurat\suratmasuk\SuratmasukController@cetakpdfsm')->name('cetakpdfsm');
 // Route::get('/suratmasuk-updateandroid/{id}','masterdatasurat\suratmasuk\SuratmasukController@updateandroid')->name('sm.updateandroid');
 
 Route::apiResource('/surat-keluar','masterdatasurat\suratkeluar\SuratkeluarController');

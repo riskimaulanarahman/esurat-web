@@ -86,28 +86,35 @@ class LoginUserController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            // $request->validate([
+            //     'email' => 'required | unique:users',
+            //     'nik' => 'required | unique:users',
+            // ]);
     
             $user = User::findOrFail($id);
-            $user->update([
-                'nik' => $request->nik,
-                'username' => $request->username,
-                'email' => $request->email,
-                'role' => $request->role,
-            ]);
+            // if($request->nik == $user->nik || $request->email == $user->email) {
+            //     return response()->json(["status" => "error", "message" => "duplikat data"]);
+            // }
+            $user->update($request->all());
+            // $user->nik = $request->nik;
+            // $user->username = $request->username;
+            // $user->email = $request->email;
+            // $user->role = $request->role;
+            // $user->save();
 
             if(!empty($request->password)) {
                 $user->password = bcrypt($request->password);
                 $user->save();
             }
 
-            $karyawan = Karyawan::where('id_karyawan',$user->id)->first();
+            // $karyawan = Karyawan::where('id_karyawan',$user->id)->first();
 
-            $karyawan = Karyawan::update([
-                'id_jabatan' => $request->jabatan,
-                'nama_karyawan' => $request->nama_karyawan,
-                'alamat' => $request->alamat,
-                'no_hp' => $request->no_hp,
-            ]);
+            // $karyawan = Karyawan::update([
+            //     'id_jabatan' => $request->jabatan,
+            //     'nama_karyawan' => $request->nama_karyawan,
+            //     'alamat' => $request->alamat,
+            //     'no_hp' => $request->no_hp,
+            // ]);
 
             // $karyawan->save();
             

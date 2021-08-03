@@ -79,8 +79,10 @@ $(document).ready(function(){
             if(item == 0) {
                 $('#modal-disposisi').modal('show');
                 $('#file_disposisi').val(file);
-            } else {
-                DevExpress.ui.notify("dalam status pengajuan, aksi tidak di izinkan", "error", 5000);
+            } else if(item == 1) {
+                DevExpress.ui.notify("aksi tidak di izinkan", "error", 5000);
+            } else if(item == 2) {
+                DevExpress.ui.notify("file tidak ditemukan", "error", 5000);
             }
         });
         $('#getid').val(data);
@@ -139,8 +141,7 @@ $(document).ready(function(){
                 useIcons:true,
                 mode: "popup",
                 allowAdding: (role=="admin" || role == "user")?true:false,
-                
-                allowUpdating:  (role=="admin" || role == "user")?true:false,
+                allowUpdating: (role=="admin" || role == "user")?true:false,
                 allowDeleting: false
             },
             scrolling: {
@@ -153,6 +154,7 @@ $(document).ready(function(){
                         container.text(options.rowIndex +1);
                     }
                 },
+                
                 {
                     caption: 'Tambah/Edit Berkas',
                     formItem: {visible:false},
@@ -166,10 +168,10 @@ $(document).ready(function(){
                     $('<button class="btn btn-danger btn-xs">Upload</button>').addClass('dx-button').on('dxclick', function(evt) {
                         evt.stopPropagation();
                         $.get('api/status-suratmasuk/'+options.data.id_surat_masuk,function(item){
-                            if(item == 0) {
+                            if(item == 2 || item == 0) {
                                 showUpload(options.data.id_surat_masuk,options.data.file_surat_masuk);
-                            } else {
-                                DevExpress.ui.notify("dalam status pengajuan, aksi tidak di izinkan", "error", 5000);
+                            } else if(item == 1) {
+                                DevExpress.ui.notify("aksi tidak di izinkan", "error", 5000);
                             }
                         })
 
@@ -274,6 +276,19 @@ $(document).ready(function(){
                         
                     }
                 },
+                {
+                    caption: "aksi",
+                    type: "buttons",
+                    width: 110,
+                    buttons: ["edit",{
+                        hint: "generate",
+                        icon: "repeat",
+                        onClick: function(e) {
+                            window.open('/api/cetakpdfsm/'+e.row.data.id_surat_masuk, '_blank');
+                        }
+                    }]
+                },
+               
                 
             ],
             export: {
@@ -285,12 +300,6 @@ $(document).ready(function(){
             masterDetail: {
                 enabled: true,
                 template: function(container, options) { 
-                    var currentEmployeeData = options.data;
-    
-                    // $("<div>")
-                    //     .addClass("master-detail-caption")
-                    //     .text(currentEmployeeData.FirstName + " " + currentEmployeeData.LastName + "'s Tasks:")
-                    //     .appendTo(container);
     
                     $("<div>")
                         .dxDataGrid({
@@ -331,16 +340,6 @@ $(document).ready(function(){
             onContentReady: function(e){
                 moveEditColumnToLeft(e.component);
             },
-            // onEditorPreparing: function(e) {
-            //     // console.log(e.row);  
-            //     if(e.dataField == "file_surat_masuk") {
-            //         e.editorName = "dxFileUploader";
-            //         e.editorOptions.uploadMode = "useButtons";
-            //         e.editorOptions.name = "myFile";
-            //         e.editorOptions.accept = "image/*,application/pdf";
-            //         // e.edtorOptions.uploadUrl = "/api/";
-            //     }
-            // },
             onToolbarPreparing: function(e) {
         
                 e.toolbarOptions.items.unshift({						

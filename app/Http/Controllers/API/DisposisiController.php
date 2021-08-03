@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Auth;
+use App\Http\Controllers\GenerateMailController;
+
 
 use App\Disposisi;
 use App\Karyawan;
 use App\SuratMasuk;
 use App\SuratKeluar;
+use App\User;
 
 
 
@@ -57,7 +60,6 @@ class DisposisiController extends Controller
     public function senddisposisi(Request $request)
     {
         try {
-            // return $request->getid;
 
             if($request->module == "suratmasuk") {
 
@@ -89,6 +91,18 @@ class DisposisiController extends Controller
                     "status" => 1
                 ]);
             }
+
+            $user = User::where('nik',$request->nik)->first();
+            $karyawan = Karyawan::where('nik',$request->nik)->first();
+
+            $module = "disposisi ".$request->module;
+            $id_users = $request->idusers;
+            $email = $user->email;
+            $nama = $karyawan->nama_karyawan;
+            $text = 'ada Disposisi menunggu persetujuan anda, silahkan cek aplikasi E-Surat';
+
+            $mail = new GenerateMailController;
+            $mail->generateMail($module,$id_users,$email,$nama,$text);
 
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
 
@@ -139,15 +153,27 @@ class DisposisiController extends Controller
                 if($data->status !== 1) {
                     return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
                 } else {
-                    $data->update($request->data);
-                    return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
+                    if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
+                        $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
+                        $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
+                        $data->save();
+                        return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
+                    } else {
+                        return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
+                    }
                 }
             } else if($request->module == 'suratkeluar') {
                 if($data->status !== 1) {
                     return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
                 } else {
-                    $data->update($request->data);
-                    return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
+                    if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
+                        $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
+                        $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
+                        $data->save();
+                        return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
+                    } else {
+                        return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
+                    }
                 }
             }
             
@@ -234,6 +260,65 @@ class DisposisiController extends Controller
 
                 }
             }
+
+            if($request->approval == 2) {
+                $stsapp = "approved";
+            } else if($request->approval == 3) {
+                $stsapp = "rejected";
+            } 
+            // else if($request->approval == 4) {
+            //     $stsapp = "diteruskan";
+            // }
+            //email
+            if($request->module == 'suratmasuk') {
+
+                if($request->aksi == 'approval') {
+                    
+                    $user = User::where('nik',0)->first();
+                    // $karyawan = Karyawan::where('nik',0)->first();
+                    
+                    $module = $stsapp." - ".$request->module;
+                    $id_users = $request->idusers;
+                    $email = $user->email;
+                    $nama = $user->username;
+                    $text = 'status disposisi dengan nomor surat '.$suratmasuk->no_surat.' telah '.$stsapp.' , silahkan cek aplikasi E-Surat';
+                    
+                } else if($request->aksi == 'teruskan') {
+                    $user = User::where('nik',$request->teruskan)->first();
+                    $karyawan = Karyawan::where('nik',$request->teruskan)->first();
+                    
+                    $module = $request->module." - diteruskan";
+                    $id_users = $request->idusers;
+                    $email = $user->email;
+                    $nama = $karyawan->nama_karyawan;
+                    $text = 'ada Disposisi menunggu persetujuan anda, silahkan cek aplikasi E-Surat';
+                }
+            } else if($request->module == 'suratkeluar') {
+                if($request->aksi == 'approval') {
+                    
+                    $user = User::where('nik',0)->first();
+                    // $karyawan = Karyawan::where('nik',0)->first();
+                    
+                    $module = $stsapp." - ".$request->module;
+                    $id_users = $request->idusers;
+                    $email = $user->email;
+                    $nama = $user->username;
+                    $text = 'status disposisi dengan nomor surat '.$suratkeluar->no_surat.' telah '.$stsapp.' , silahkan cek aplikasi E-Surat';
+                    
+                } else if($request->aksi == 'teruskan') {
+                    $user = User::where('nik',$request->teruskan)->first();
+                    $karyawan = Karyawan::where('nik',$request->teruskan)->first();
+                    
+                    $module = $request->module." - diteruskan";
+                    $id_users = $request->idusers;
+                    $email = $user->email;
+                    $nama = $karyawan->nama_karyawan;
+                    $text = 'ada Disposisi menunggu persetujuan anda, silahkan cek aplikasi E-Surat';
+                }
+            }
+                
+            $mail = new GenerateMailController;
+            $mail->generateMail($module,$id_users,$email,$nama,$text);
 
             return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
 

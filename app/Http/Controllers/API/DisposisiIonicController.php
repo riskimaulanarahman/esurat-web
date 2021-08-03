@@ -56,7 +56,7 @@ class DisposisiIonicController extends Controller
                 } else {
                     if($request->data['aksi'] == 'approval') {
                         // return 'approval';
-                        if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                        if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
                             $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
                             $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
                         }
@@ -71,7 +71,7 @@ class DisposisiIonicController extends Controller
                     } else if($request->data['aksi'] == 'teruskan') {
                         // return 'teruskan';
                         if($data->nik !== (int)$request->data['teruskan']) {
-                            if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                            if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
                                 $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
                                 $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
                             }
@@ -106,7 +106,7 @@ class DisposisiIonicController extends Controller
                 } else {
                     if($request->data['aksi'] == 'approval') {
                         // return 'approval';
-                        if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                        if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
                             $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
                             $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
                         }
@@ -121,7 +121,7 @@ class DisposisiIonicController extends Controller
                     } else if($request->data['aksi'] == 'teruskan') {
                         // return 'teruskan';
                         if($data->nik !== (int)$request->data['teruskan']) {
-                            if($data->dengan_hormat_harap == null || $data->catatan_tindak_lanjut == null) {
+                            if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
                                 $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
                                 $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
                             }

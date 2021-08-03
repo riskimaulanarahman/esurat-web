@@ -60,6 +60,7 @@ var dataGrid = $("#master-karyawan").dxDataGrid({
         //     dataField: "id_jabatan",
         // },  
         { 
+            caption: "jabatan",
             dataField: "id_jabatan",
             editorType: "dxSelectBox",
             // validationRules: [

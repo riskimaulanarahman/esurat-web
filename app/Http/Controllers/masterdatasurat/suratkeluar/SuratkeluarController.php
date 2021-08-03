@@ -135,10 +135,11 @@ class SuratkeluarController extends Controller
             $data = SuratKeluar::where('id_surat_keluar',$id)->first();
             if($data->status !== 0) {
                 return 1;
-            } else {
+            }else if($data->file_surat_keluar == null){
+                return 2; 
+            }else {
                 return 0;
             }
-
         } catch (\Exception $e){
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
