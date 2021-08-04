@@ -223,13 +223,13 @@ $(document).ready(function(){
                         displayExpr: 'value',
                     },
                 },        
-                { 
-                    dataField: "tindak_lanjut",
-                    formItem: {visible:false},
-                    width: 150,
-                    // fixed: true,
-                    // fixedPosition: "right"
-                },
+                // { 
+                //     dataField: "tindak_lanjut",
+                //     formItem: {visible:false},
+                //     width: 150,
+                //     // fixed: true,
+                //     // fixedPosition: "right"
+                // },
                 {
                     caption: 'Disposisi',
                     formItem: {visible:false},

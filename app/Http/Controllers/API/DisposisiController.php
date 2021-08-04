@@ -30,11 +30,11 @@ class DisposisiController extends Controller
         try {
             if($request->module == 'suratmasuk'){
 
-                $data = Disposisi::where('nik',$request->nik)->with(['suratmasuk'])->whereNotNull('id_surat_masuk')->get();
+                $data = Disposisi::where('nik',$request->nik)->with(['suratmasuk'])->whereNotNull('id_surat_masuk')->orderBy('status','asc')->get();
 
             } else if($request->module == 'suratkeluar') {
 
-                $data = Disposisi::where('nik',$request->nik)->with(['suratkeluar'])->whereNotNull('id_surat_keluar')->get();
+                $data = Disposisi::where('nik',$request->nik)->with(['suratkeluar'])->whereNotNull('id_surat_keluar')->orderBy('status','asc')->get();
             }   
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);

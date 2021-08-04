@@ -253,12 +253,7 @@ $(document).ready(function(){
                         hint: "generate",
                         icon: "repeat",
                         onClick: function(e) {
-                            alert(e.row.data.id_surat_keluar);
-                            // var clonedItem = $.extend({}, e.row.data, { ID: ++maxID });
-    
-                            // employees.splice(e.row.rowIndex, 0, clonedItem);
-                            // e.component.refresh(true);
-                            // e.event.preventDefault();
+                            window.open('/api/cetakpdfsk/'+e.row.data.id_surat_keluar, '_blank');
                         }
                     }]
                 },

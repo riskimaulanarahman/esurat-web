@@ -8,6 +8,8 @@ use Illuminate\Support\Carbon;
 
 use App\Karyawan;
 use App\SuratKeluar;
+use App\Disposisi;
+use PDF;
 
 
 class SuratkeluarController extends Controller
@@ -144,5 +146,22 @@ class SuratkeluarController extends Controller
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
         }
+    }
+
+    public function cetakpdfsk($id) {
+        $suratkeluar = SuratKeluar::where('id_surat_keluar',$id)->first();
+        $disposisi = Disposisi::select('disposisi.*','karyawan.nama_karyawan')
+        ->leftJoin('karyawan','disposisi.diteruskan_kepada','karyawan.nik')
+        ->where('disposisi.id_surat_keluar',$id)->orderBy('disposisi.created_at','desc')
+        ->first();
+
+        // return $disposisi;
+
+        // $pdf = PDF::loadview('pdfsuratmasuk');
+        $pdf = PDF::loadview('pdfsuratkeluar',[
+            'suratkeluar'=>$suratkeluar,
+            'disposisi'=>$disposisi,
+        ]);
+	    return $pdf->stream();
     }
 }

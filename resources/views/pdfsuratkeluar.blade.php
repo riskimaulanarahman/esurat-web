@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Surat Masuk PDF</title>
+	<title>Surat Keluar PDF</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -19,17 +19,17 @@
 	<div class="row">
 
 		<div style="font-size: 12px;">
-			<label><b>Asal Surat</b> : {{$suratmasuk->asal_surat}}</label><br>
-			<label><b>Tgl Surat</b> : {{$suratmasuk->tgl_surat}}</label><br>
-			<label><b>No Surat</b> : {{$suratmasuk->no_surat}}</label><br><br>
-			<label><b>Perihal</b> : {{$suratmasuk->perihal_surat}}</label><br>
+			{{-- <label><b>Asal Surat</b> : {{$suratkeluar->asal_surat}}</label><br> --}}
+			<label><b>Tgl Dibuat</b> : {{$suratkeluar->tgl_dibuat}}</label><br>
+			<label><b>No Surat</b> : {{$suratkeluar->no_surat}}</label><br><br>
+			<label><b>Perihal</b> : {{$suratkeluar->perihal_surat}}</label><br>
 			<label><b>Diteruskan Kepada</b> : {{$disposisi->nama_karyawan}}</label><br><br><br>
 			<label><b>Catatan Tindak Lanjut</b> : <br> {{$disposisi->catatan_tindak_lanjut}}</label>
 		</div>
 		<div style="font-size: 12px; float:right; padding-right: 50px;">
 			<label><b>No Agenda</b> : {{$disposisi->no_agenda}}</label><br>
-			<label><b>Tgl Terima</b> : {{$suratmasuk->tgl_diterima}}</label><br>
-			<label><b>Sifat Surat</b> : {{$suratmasuk->sifat_surat}}</label><br><br>
+			{{-- <label><b>Tgl Terima</b> : {{$suratkeluar->tgl_diterima}}</label><br> --}}
+			<label><b>Sifat Surat</b> : {{$suratkeluar->sifat_surat}}</label><br><br>
 			<label><b>Dengan Hormat Harap</b> : {{$disposisi->dengan_hormat_harap}}</label><br>
 		</div>
 

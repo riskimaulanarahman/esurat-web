@@ -20,6 +20,8 @@ class SuratmasukController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // fungsi menampilkan data surat masuk
     public function index()
     {
         try {
