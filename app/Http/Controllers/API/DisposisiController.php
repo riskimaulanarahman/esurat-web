@@ -8,14 +8,11 @@ use Illuminate\Support\Carbon;
 use Auth;
 use App\Http\Controllers\GenerateMailController;
 
-
 use App\Disposisi;
 use App\Karyawan;
 use App\SuratMasuk;
 use App\SuratKeluar;
 use App\User;
-
-
 
 class DisposisiController extends Controller
 {
@@ -187,7 +184,6 @@ class DisposisiController extends Controller
     public function aksi(Request $request) {
         try {
             $id = $request->getid;
-            // return $request->all();
             if($request->module == 'suratmasuk') {
                 if($request->aksi == 'approval') {
                     $disposisi = Disposisi::findOrFail($id);
@@ -211,8 +207,8 @@ class DisposisiController extends Controller
                             'no_agenda' => $disposisi->no_agenda,
                             'tgl_disposisi' => $disposisi->tgl_disposisi,
                             'diteruskan_kepada' => $request->teruskan,
-                            // 'dengan_hormat_harap' => $disposisi->dengan_hormat_harap,
-                            // 'catatan_tindak_lanjut' => $disposisi->catatan_tindak_lanjut,
+                            'dengan_hormat_harap' => $disposisi->dengan_hormat_harap,
+                            'catatan_tindak_lanjut' => $disposisi->catatan_tindak_lanjut,
                             'status' => 1,
                             'file_disposisi' => $disposisi->file_disposisi,
                         ]);
@@ -246,8 +242,8 @@ class DisposisiController extends Controller
                             'no_agenda' => $disposisi->no_agenda,
                             'tgl_disposisi' => $disposisi->tgl_disposisi,
                             'diteruskan_kepada' => $request->teruskan,
-                            // 'dengan_hormat_harap' => $disposisi->dengan_hormat_harap,
-                            // 'catatan_tindak_lanjut' => $disposisi->catatan_tindak_lanjut,
+                            'dengan_hormat_harap' => $disposisi->dengan_hormat_harap,
+                            'catatan_tindak_lanjut' => $disposisi->catatan_tindak_lanjut,
                             'status' => 1,
                             'file_disposisi' => $disposisi->file_disposisi,
                         ]);
@@ -256,7 +252,6 @@ class DisposisiController extends Controller
                         return response()->json(["status" => "error", "message" => 'Tidak Bisa Diteruskan dengan orang yang sama']);
 
                     }
-
 
                 }
             }

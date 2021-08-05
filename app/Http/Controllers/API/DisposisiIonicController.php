@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Auth;
+use App\Http\Controllers\GenerateMailController;
 
 use App\Disposisi;
 use App\Karyawan;
 use App\SuratMasuk;
 use App\SuratKeluar;
+use App\User;
+
 
 class DisposisiIonicController extends Controller
 {
@@ -20,11 +23,11 @@ class DisposisiIonicController extends Controller
         try {
             if($request->module == 'suratmasuk'){
 
-                $data = Disposisi::where('nik',$request->nik)->with(['suratmasuk'])->whereNotNull('id_surat_masuk')->get();
+                $data = Disposisi::where('nik',$request->nik)->with(['suratmasuk'])->whereNotNull('id_surat_masuk')->orderBy('status','asc')->get();
 
             } else if($request->module == 'suratkeluar') {
 
-                $data = Disposisi::where('nik',$request->nik)->with(['suratkeluar'])->whereNotNull('id_surat_keluar')->get();
+                $data = Disposisi::where('nik',$request->nik)->with(['suratkeluar'])->whereNotNull('id_surat_keluar')->orderBy('status','asc')->get();
             }   
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
@@ -50,6 +53,12 @@ class DisposisiIonicController extends Controller
         try {
             $data = Disposisi::findOrFail($id);
 
+            if($request->data['approval'] == 2) {
+                $stsapp = "approved";
+            } else if($request->data['approval'] == 3) {
+                $stsapp = "rejected";
+            } 
+
             if($request->module == 'suratmasuk'){
                 if($data->status !== 1) {
                     return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
@@ -68,6 +77,17 @@ class DisposisiIonicController extends Controller
                         $suratmasuk->status = $request->data['approval'];
                         $suratmasuk->save();
 
+                        //send email
+                        $user = User::where('nik',0)->first();
+                    
+                        $module = $stsapp." - ".$request->module;
+                        $id_users = null;
+                        $email = $user->email;
+                        $nama = $user->username;
+                        $text = 'status disposisi dengan nomor surat '.$suratmasuk->no_surat.' telah '.$stsapp.' , silahkan cek aplikasi E-Surat';
+
+                        $mail = new GenerateMailController;
+                        $mail->generateMail($module,$id_users,$email,$nama,$text);
                     } else if($request->data['aksi'] == 'teruskan') {
                         // return 'teruskan';
                         if($data->nik !== (int)$request->data['teruskan']) {
@@ -91,6 +111,19 @@ class DisposisiIonicController extends Controller
                                 'status' => 1,
                                 'file_disposisi' => $data->file_disposisi,
                             ]);
+
+                            //send email
+                            $user = User::where('nik',$request->data['teruskan'])->first();
+                            $karyawan = Karyawan::where('nik',$request->data['teruskan'])->first();
+                            
+                            $module = $request->module." - diteruskan";
+                            $id_users = null;
+                            $email = $user->email;
+                            $nama = $karyawan->nama_karyawan;
+                            $text = 'ada Disposisi menunggu persetujuan anda, silahkan cek aplikasi E-Surat';
+                            
+                            $mail = new GenerateMailController;
+                            $mail->generateMail($module,$id_users,$email,$nama,$text);
                         } else {
                             
                             return response()->json(["status" => "error", "message" => 'Tidak Bisa Diteruskan dengan orang yang sama']);
@@ -118,6 +151,18 @@ class DisposisiIonicController extends Controller
                         $suratkeluar->status = $request->data['approval'];
                         $suratkeluar->save();
 
+                        //send email
+                        $user = User::where('nik',0)->first();
+                    
+                        $module = $stsapp." - ".$request->module;
+                        $id_users = null;
+                        $email = $user->email;
+                        $nama = $user->username;
+                        $text = 'status disposisi dengan nomor surat '.$suratkeluar->no_surat.' telah '.$stsapp.' , silahkan cek aplikasi E-Surat';
+
+                        $mail = new GenerateMailController;
+                        $mail->generateMail($module,$id_users,$email,$nama,$text);
+
                     } else if($request->data['aksi'] == 'teruskan') {
                         // return 'teruskan';
                         if($data->nik !== (int)$request->data['teruskan']) {
@@ -141,6 +186,19 @@ class DisposisiIonicController extends Controller
                                 'status' => 1,
                                 'file_disposisi' => $data->file_disposisi,
                             ]);
+
+                            //send email
+                            $user = User::where('nik',$request->data['teruskan'])->first();
+                            $karyawan = Karyawan::where('nik',$request->data['teruskan'])->first();
+                            
+                            $module = $request->module." - diteruskan";
+                            $id_users = null;
+                            $email = $user->email;
+                            $nama = $karyawan->nama_karyawan;
+                            $text = 'ada Disposisi menunggu persetujuan anda, silahkan cek aplikasi E-Surat';
+                            
+                            $mail = new GenerateMailController;
+                            $mail->generateMail($module,$id_users,$email,$nama,$text);
                         } else {
                             
                             return response()->json(["status" => "error", "message" => 'Tidak Bisa Diteruskan dengan orang yang sama']);
@@ -151,6 +209,30 @@ class DisposisiIonicController extends Controller
                     return response()->json(['status' => "success", "message" => "Berhasil Ubah Data"]);
                 }
             }
+
+            
+
+            // send email
+            // if($request->module == 'suratmasuk') {
+
+            //     if($request->data['aksi'] == 'approval') {
+                    
+                   
+                    
+            //     } else if($request->data['aksi'] == 'teruskan') {
+                    
+            //     }
+            // } else if($request->module == 'suratkeluar') {
+            //     if($request->data['aksi'] == 'approval') {
+                    
+                    
+                    
+            //     } else if($request->data['aksi'] == 'teruskan') {
+                    
+            //     }
+            // }
+                
+            
             
             
         } catch (\Exception $e){
