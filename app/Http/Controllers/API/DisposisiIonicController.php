@@ -104,7 +104,7 @@ class DisposisiIonicController extends Controller
                                 'nik' => $request->data['teruskan'],
                                 'no_agenda' => $data->no_agenda,
                                 'tgl_disposisi' => $data->tgl_disposisi,
-                                // 'diteruskan_kepada' => $request->data['teruskan'],
+                                'diteruskan_kepada' => $request->data['teruskan'],
                                 'dengan_hormat_harap' => $data->dengan_hormat_harap,
                                 'catatan_tindak_lanjut' => $data->catatan_tindak_lanjut,
                                 'status' => 1,
@@ -143,7 +143,7 @@ class DisposisiIonicController extends Controller
                         } else if($request->data['approval'] == 3) {
                             $stsapp = "rejected";
                         } 
-                        
+
                         if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
                             $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
                             $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
@@ -185,7 +185,7 @@ class DisposisiIonicController extends Controller
                                 'nik' => $request->data['teruskan'],
                                 'no_agenda' => $data->no_agenda,
                                 'tgl_disposisi' => $data->tgl_disposisi,
-                                // 'diteruskan_kepada' => $request->data['teruskan'],
+                                'diteruskan_kepada' => $request->data['teruskan'],
                                 'dengan_hormat_harap' => $data->dengan_hormat_harap,
                                 'catatan_tindak_lanjut' => $data->catatan_tindak_lanjut,
                                 'status' => 1,
