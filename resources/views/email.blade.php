@@ -3,4 +3,5 @@
 
 <p>{{$text}}</p>
 
+<p>URL : <a href="http://esurat-um.com/" target="_blank"></a></p>
 <p><i>Harap Untuk Tidak Membalas Email ini</i></p>

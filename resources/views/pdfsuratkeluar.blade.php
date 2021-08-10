@@ -22,7 +22,7 @@
 			{{-- <label><b>Asal Surat</b> : {{$suratkeluar->asal_surat}}</label><br> --}}
 			<label><b>Tgl Dibuat</b> : {{$suratkeluar->tgl_dibuat}}</label><br>
 			<label><b>No Surat</b> : {{$suratkeluar->no_surat}}</label><br><br>
-			<label><b>Perihal</b> : {{$suratkeluar->perihal_surat}}</label><br>
+			<label><b>Perihal</b> : {!! nl2br(e(wordwrap($suratkeluar->perihal_surat, 40, "\n", true))) !!}</label><br>
 			<label><b>Diteruskan Kepada</b> : {{$disposisi->nama_karyawan}}</label><br><br><br>
 			<label><b>Catatan Tindak Lanjut</b> : <br> {{$disposisi->catatan_tindak_lanjut}}</label>
 		</div>

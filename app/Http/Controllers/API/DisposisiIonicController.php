@@ -51,19 +51,18 @@ class DisposisiIonicController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $data = Disposisi::findOrFail($id);
-
-            if($request->data['approval'] == 2) {
-                $stsapp = "approved";
-            } else if($request->data['approval'] == 3) {
-                $stsapp = "rejected";
-            } 
+            $data = Disposisi::findOrFail($id);  
 
             if($request->module == 'suratmasuk'){
                 if($data->status !== 1) {
                     return response()->json(["status" => "error", "message" => "aksi tidak di izinkan"]);
                 } else {
                     if($request->data['aksi'] == 'approval') {
+                        if($request->data['approval'] == 2) {
+                            $stsapp = "approved";
+                        } else if($request->data['approval'] == 3) {
+                            $stsapp = "rejected";
+                        } 
                         // return 'approval';
                         if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
                             $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
@@ -139,6 +138,12 @@ class DisposisiIonicController extends Controller
                 } else {
                     if($request->data['aksi'] == 'approval') {
                         // return 'approval';
+                        if($request->data['approval'] == 2) {
+                            $stsapp = "approved";
+                        } else if($request->data['approval'] == 3) {
+                            $stsapp = "rejected";
+                        } 
+                        
                         if($data->dengan_hormat_harap == null && $data->catatan_tindak_lanjut == null) {
                             $data->dengan_hormat_harap = $request->data['dengan_hormat_harap'];
                             $data->catatan_tindak_lanjut = $request->data['catatan_tindak_lanjut'];
