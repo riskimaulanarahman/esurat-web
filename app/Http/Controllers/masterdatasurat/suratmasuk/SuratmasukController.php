@@ -75,7 +75,8 @@ class SuratmasukController extends Controller
      */
     public function show()
     {
-        $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik')->pluck('nik','nama_karyawan');
+        $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik','id_jabatan')->with('jabatan')->get();
+        // return $karyawan;
         return view('pages/masterdata/masterdatasurat/suratmasuk/suratmasuk',[
             "karyawan" => $karyawan
         ]);

@@ -42,7 +42,7 @@
 						  <select class="form-control" name="nik" id="nik">
 							  <option value="">- Pilih -</option>
 							  @foreach($karyawan as $key => $val)
-								<option value="{{$val}}">{{$key}}</option>
+								<option value="{{$val->nik}}">{{$val->jabatan->nama_jabatan}} ({{$val->nama_karyawan}})</option>
 							  @endforeach
 						  </select>
 						</div>

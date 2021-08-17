@@ -117,7 +117,8 @@ class DisposisiController extends Controller
      */
     public function showsuratmasuk()
     {
-        $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik')->pluck('nik','nama_karyawan');
+        // $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik')->pluck('nik','nama_karyawan');
+        $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik','id_jabatan')->with('jabatan')->get();
 
         return view('pages/disposisi/dsuratmasuk',[
             "karyawan" => $karyawan
@@ -126,7 +127,8 @@ class DisposisiController extends Controller
 
     public function showsuratkeluar()
     {
-        $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik')->pluck('nik','nama_karyawan');
+        // $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik')->pluck('nik','nama_karyawan');
+        $karyawan = Karyawan::select('id_karyawan','nama_karyawan','nik','id_jabatan')->with('jabatan')->get();
 
         return view('pages/disposisi/dsuratkeluar',[
             "karyawan" => $karyawan
